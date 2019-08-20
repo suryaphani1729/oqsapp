@@ -1,4 +1,5 @@
 const express = require("express");
+let mongoose = require('./database');
 
 const app = express();
 
