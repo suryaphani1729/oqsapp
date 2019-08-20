@@ -26,11 +26,11 @@ MyModel.find(function(error, result) { res.json(result); });
 
 });
 
-app.post("/add",(req,res) => {
+app.get("/add",(req,res) => {
 
 
 
-     var title = req.params.title;
+     var title = req.query.title;
 var data = new MyModel({ title: title, quiz:[],answers:[] });
 
 data.save(function (err) {
