@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 
 app.use(express.json({ extended: false }));
-
+const port = process.env.PORT || 8080;
 
 //get all users
 app.get("/",  (req, res) => {
@@ -12,4 +12,4 @@ app.get("/",  (req, res) => {
  
 });
 
-app.listen(3000);
+app.listen(port);
