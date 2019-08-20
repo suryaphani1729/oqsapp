@@ -2,10 +2,14 @@ const express = require("express");
 const mongoose = require('mongoose')
 let mongodb = require('./database');
 var bodyParser = require('body-parser')
+var cors = require('cors')
+
+
 
 
 const app = express();
 
+app.use(cors())
 app.use( bodyParser.json() );
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(express.json({ extended: false }));
@@ -16,7 +20,6 @@ var MyModel = mongoose.model('oqsapp', new mongoose.Schema({ title : String,quiz
 //get all users
 app.get("/",   (req, res) => {
 
-//var MyModel = mongoose.model('oqsapp', new mongoose.Schema({ title : String,quiz:Array,answers:Array }));
 
 // Works
 MyModel.find(function(error, result) { res.json(result); });
