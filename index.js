@@ -1,8 +1,7 @@
 const express = require("express");
-
+let mongoose = require('./database');
 
 const app = express();
-const port = process.env.PORT || 8080;
 
 app.use(express.json({ extended: false }));
 
@@ -10,8 +9,8 @@ app.use(express.json({ extended: false }));
 //get all users
 app.get("/",  (req, res) => {
 
-    res.send("Helloworld");
+    res.send("Hello world2");
  
 });
 
-app.listen(port);
+app.listen(3000);
