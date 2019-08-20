@@ -1,8 +1,8 @@
 const express = require("express");
 const mongoose = require('mongoose')
 let mongodb = require('./database');
-var bodyParser = require('body-parser');
-var cors = require('cors');
+var bodyParser = require('body-parser')
+var cors = require('cors')
 
 
 
@@ -17,7 +17,7 @@ app.use(express.json({ extended: false }));
 const port = process.env.PORT || 8080;
 var MyModel = mongoose.model('oqsapp', new mongoose.Schema({ title : String,quiz:Array,answers:Array }));
 
-//get all users
+//get All quizes
 app.get("/",   (req, res) => {
 
 
@@ -28,13 +28,16 @@ MyModel.find(function(error, result) { res.json(result); });
 
 
 });
+//save quiz
+app.post("/add",(req,res) => {
 
-app.get("/add",(req,res) => {
+     var reqData = req.body;
+     var title=reqData.title;
+     var quiz = reqData.quiz;
+     var answers = reqData.answers;
 
 
-
-     var title = req.query.title;
-var data = new MyModel({ title: title, quiz:[],answers:[] });
+var data = new MyModel({ title: title, quiz:quiz,answers:answers });
 
 data.save(function (err) {
 
