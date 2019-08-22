@@ -16,16 +16,35 @@ app.use(express.json({ extended: false }));
 
 const port = process.env.PORT || 8080;
 var MyModel = mongoose.model('oqsapp', new mongoose.Schema({ title : String,quiz:Array,answers:Array }));
+var UserModel = mongoose.model('oqsusers', new mongoose.Schema({ username : String,password:String }));
+
+//login
+app.post("/login",(req,res) => {
+
+     var reqData = req.body;
+     var username=reqData.username;
+     var password = reqData.password;
+
+ // var data = new UserModel({ username: username, password:password });
+
+UserModel.findOne({ username: username, password:password }, function(err, user) {
+   
+     if(user)
+          res.json({status:1,msg:"Found"});
+     else
+          res.send({status:0,msg:"not found"});
+});
+});
+
+
+
+
 
 //get All quizes
 app.get("/",   (req, res) => {
 
-
 // Works
 MyModel.find(function(error, result) { res.json(result); });
-
-
-
 
 });
 //save quiz
