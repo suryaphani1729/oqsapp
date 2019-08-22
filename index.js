@@ -30,12 +30,33 @@ app.post("/login",(req,res) => {
 UserModel.findOne({ username: username, password:password }, function(err, user) {
    
      if(user)
-          res.json({status:1,msg:"Found"});
+          res.json({status:1,msg:"Login Successfull"});
      else
-          res.send({status:0,msg:"not found"});
+          res.send({status:0,msg:"Login Failed, please register"});
 });
 });
+//login
+app.post("/register",(req,res) => {
 
+     var reqData = req.body;
+     var username=reqData.username;
+     var password = reqData.password;
+
+  var data = new UserModel({ username: username, password:password });
+
+UserModel.findOne({ username: username, password:password }, function(err, user) {
+   
+     if(user)
+          res.json({status:0,msg:"Already Registered"});
+     else{
+          
+          data.save(function (err) {
+               if(err)  res.json({status:0,msg:"Something went wrong"});
+                res.json({status:1,msg:"Registered Successfull"});
+          });
+     }
+});
+});
 
 
 
