@@ -17,17 +17,29 @@ app.use(express.json({ extended: false }));
 const port = process.env.PORT || 8080;
 var MyModel = mongoose.model('oqsapp', new mongoose.Schema({ title : String,quiz:Array,answers:Array }));
 var UserModel = mongoose.model('oqsusers', new mongoose.Schema({ username : String,password:String }));
+var Schema = mongoose.Schema,ObjectId = Schema.ObjectId;
+var TestModel = mongoose.model('tests', new mongoose.Schema({ user_id : String,bits:Number, expires:Date, answers:Array }));
+var ResultModel = mongoose.model('results', new mongoose.Schema({ test_id : String,user_id : ObjectId,marks:Number, submitted:Date }));
 
 //login
-app.post("/login",(req,res) => {
+app.post("/newtest",(req,res) => {
 
      var reqData = req.body;
-     var username=reqData.username;
-     var password = reqData.password;
+     var user_id= reqData.user_id;
+     var bits = reqData.bits;
+     var expires = reqData.expires;
+     var answers = reqData.answers;
+     
 
- // var data = new UserModel({ username: username, password:password });
+var data = new TestModel({ user_id, bits, expires, answers });
 
-UserModel.findOne({ username: username, password:password }, function(err, user) {
+data.save(function (err) {
+
+ res.json(result); 
+
+});
+     
+TestModel.findOne({ username: username, password:password }, function(err, user) {
    
      if(user)
           res.json({status:1,msg:"Login Successfull"});
