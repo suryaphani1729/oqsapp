@@ -17,7 +17,7 @@ app.use(express.json({ extended: false }));
 const port = process.env.PORT || 8080;
 var MyModel = mongoose.model('oqsapp', new mongoose.Schema({ title : String,quiz:Array,answers:Array }));
 var UserModel = mongoose.model('oqsusers', new mongoose.Schema({ username : String,password:String }));
-var Schema = mongoose.Schema,ObjectId = Schema.ObjectId;
+var ObjectId = mongoose.Types.ObjectId;
 var TestModel = mongoose.model('tests', new mongoose.Schema({ user_id : ObjectId,bits:Number, expires:Date, answers:Array }));
 var ResultModel = mongoose.model('results', new mongoose.Schema({ test_id : ObjectId,user_id : ObjectId,marks:Number, submitted:Date }));
 
