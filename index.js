@@ -19,7 +19,7 @@ var MyModel = mongoose.model('oqsapp', new mongoose.Schema({ title : String,quiz
 var UserModel = mongoose.model('oqsusers', new mongoose.Schema({ username : String,password:String }));
 var Schema = mongoose.Schema,ObjectId = Schema.ObjectId;
 var TestModel = mongoose.model('tests', new mongoose.Schema({ user_id : String,bits:Number, expires:Date, answers:Array }));
-var ResultModel = mongoose.model('results', new mongoose.Schema({ test_id : String,user_id : ObjectId,marks:Number, submitted:Date }));
+var ResultModel = mongoose.model('results', new mongoose.Schema({ test_id : String,user_id : String,marks:Number, submitted:Date }));
 
 //save test
 app.post("/newtest",(req,res) => {
@@ -33,7 +33,7 @@ app.post("/newtest",(req,res) => {
 
 var data = new TestModel({ user_id, bits, expires, answers });
 
-data.save(function (err) {
+data.save(function (err,result) {
 
  res.json(result); 
 
@@ -50,6 +50,26 @@ app.post("/gettestbyuser",(req,res) => {
          
       });
 
+     
+});
+//save result
+app.post("/saveresult",(req,res) => {
+
+     var reqData = req.body;
+     var user_id= reqData.user_id;
+     var test_id = reqData.test_id;
+     var marks = reqData.marks;
+     var submitted = reqData.submitted;
+     
+     
+
+var data = new ResultModel({ user_id,test_id,marks,submitted });
+
+data.save(function (err,result) {
+
+ res.json(result); 
+
+});
      
 });
 //login
