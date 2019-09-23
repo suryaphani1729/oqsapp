@@ -18,8 +18,8 @@ const port = process.env.PORT || 8080;
 var MyModel = mongoose.model('oqsapp', new mongoose.Schema({ title : String,quiz:Array,answers:Array }));
 var UserModel = mongoose.model('oqsusers', new mongoose.Schema({ username : String,password:String }));
 var Schema = mongoose.Schema,ObjectId = Schema.ObjectId;
-var TestModel = mongoose.model('tests', new mongoose.Schema({ user_id : String,bits:Number, expires:Date, answers:Array }));
-var ResultModel = mongoose.model('results', new mongoose.Schema({ test_id : String,user_id : String,marks:Number, submitted:Date }));
+var TestModel = mongoose.model('tests', new mongoose.Schema({ user_id : ObjectId,bits:Number, expires:Date, answers:Array }));
+var ResultModel = mongoose.model('results', new mongoose.Schema({ test_id : ObjectId,user_id : ObjectId,marks:Number, submitted:Date }));
 
 
 
@@ -53,7 +53,7 @@ app.post("/newtest",(req,res) => {
      var answers = reqData.answers;
      
 
-var data = new TestModel({ user_id, bits, expires, answers });
+var data = new TestModel({ user_id: ObjectId(user_id), bits, expires, answers });
 
 data.save(function (err,result) {
 
@@ -67,7 +67,7 @@ app.post("/gettestbyuser",(req,res) => {
 
      var reqData = req.body;
      var user_id= reqData.user_id;
-      TestModel.find({ user_id: user_id }, function(err, user) {
+      TestModel.find({ user_id: ObjectId(user_id) }, function(err, user) {
          res.json(user);
          
       });
@@ -85,7 +85,7 @@ app.post("/saveresult",(req,res) => {
      
      
 
-var data = new ResultModel({ user_id,test_id,marks,submitted });
+var data = new ResultModel({ user_id: ObjectId(user_id),test_id:ObjectId(test_id),marks,submitted });
 
 data.save(function (err,result) {
 
