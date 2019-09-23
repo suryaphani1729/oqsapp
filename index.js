@@ -53,7 +53,7 @@ app.post("/newtest",(req,res) => {
      var answers = reqData.answers;
      
 
-var data = new TestModel({ user_id: ObjectId(user_id), bits, expires, answers });
+var data = new TestModel({ user_id:new ObjectId(user_id), bits, expires, answers });
 
 data.save(function (err,result) {
 
@@ -67,7 +67,7 @@ app.post("/gettestbyuser",(req,res) => {
 
      var reqData = req.body;
      var user_id= reqData.user_id;
-      TestModel.find({ user_id: ObjectId(user_id) }, function(err, user) {
+      TestModel.find({ user_id:new ObjectId(user_id) }, function(err, user) {
          res.json(user);
          
       });
@@ -85,7 +85,7 @@ app.post("/saveresult",(req,res) => {
      
      
 
-var data = new ResultModel({ user_id: ObjectId(user_id),test_id:ObjectId(test_id),marks,submitted });
+var data = new ResultModel({ user_id:new ObjectId(user_id),test_id:new ObjectId(test_id),marks,submitted });
 
 data.save(function (err,result) {
 
