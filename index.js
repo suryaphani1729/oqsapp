@@ -18,7 +18,7 @@ const port = process.env.PORT || 8080;
 var MyModel = mongoose.model('oqsapp', new mongoose.Schema({ title : String,quiz:Array,answers:Array }));
 var UserModel = mongoose.model('oqsusers', new mongoose.Schema({ username : String,password:String }));
 var ObjectId = mongoose.Types.ObjectId;
-var TestModel = mongoose.model('tests', new mongoose.Schema({ user_id : ObjectId,bits:Number, expires:Date, answers:Array }));
+var TestModel = mongoose.model('tests', new mongoose.Schema({ user_id : ObjectId,title:String,bits:Number, expires:Date, answers:Array }));
 var ResultModel = mongoose.model('results', new mongoose.Schema({ test_id : ObjectId,user_id : ObjectId,marks:Number, submitted:Date }));
 
 
@@ -48,12 +48,13 @@ app.post("/newtest",(req,res) => {
 
      var reqData = req.body;
      var user_id= reqData.user_id;
+     var title = reqData.title;
      var bits = reqData.bits;
      var expires = reqData.expires;
      var answers = reqData.answers;
      
 
-var data = new TestModel({ user_id:new ObjectId(user_id), bits, expires, answers });
+var data = new TestModel({ user_id:new ObjectId(user_id),title, bits, expires, answers });
 
 data.save(function (err,result) {
 
