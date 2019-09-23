@@ -21,7 +21,7 @@ var Schema = mongoose.Schema,ObjectId = Schema.ObjectId;
 var TestModel = mongoose.model('tests', new mongoose.Schema({ user_id : String,bits:Number, expires:Date, answers:Array }));
 var ResultModel = mongoose.model('results', new mongoose.Schema({ test_id : String,user_id : ObjectId,marks:Number, submitted:Date }));
 
-//login
+//save test
 app.post("/newtest",(req,res) => {
 
      var reqData = req.body;
@@ -39,13 +39,18 @@ data.save(function (err) {
 
 });
      
-TestModel.findOne({ username: username, password:password }, function(err, user) {
-   
-     if(user)
-          res.json({status:1,msg:"Login Successfull"});
-     else
-          res.send({status:0,msg:"Login Failed, please register"});
 });
+//get test by user id
+app.post("/gettestbyuser",(req,res) => {
+
+     var reqData = req.body;
+     var user_id= reqData.user_id;
+      TestModel.find({ user_id: user_id }, function(err, user) {
+         res.json(user);
+         
+      });
+
+     
 });
 //login
 app.post("/register",(req,res) => {
