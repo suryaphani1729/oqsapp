@@ -75,6 +75,18 @@ app.post("/gettestbyuser",(req,res) => {
 
      
 });
+//get results by test id
+app.post("/getresultbytest",(req,res) => {
+
+     var reqData = req.body;
+     var test_id= reqData.test_id;
+      ResultModel.find({ test_id:new ObjectId(test_id) }, function(err, user) {
+         res.json(user);
+         
+      });
+
+     
+});
 //save result
 app.post("/saveresult",(req,res) => {
 
